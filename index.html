@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		.azul{
+			background: blue;
+			color: #fff;
+		}		
+		#cache{
+		  display:none;
+		}
+	</style>
+</head>
+<body>
+	<button class="btn-azul">azul</button>
+	<button id="hardReset">Resetar</button>
+	<p>É um fato conhecido de todos que um leitor se distrairá com o conteúdo de texto legível de uma página quando estiver examinando sua diagramação. A vantagem de usar Lorem Ipsum é que ele tem uma distribuição normal de letras, ao contrário de "Conteúdo aqui, conteúdo aqui", fazendo com que ele tenha uma aparência similar a de um texto legível. Muitos softwares de publicação e editores de páginas na internet agora usam Lorem Ipsum como texto-modelo padrão, e uma rápida busca por 'lorem ipsum' mostra vários websites ainda em sua fase de construção. Várias versões novas surgiram ao longo dos anos, eventualmente por acidente, e às vezes de propósito (injetando humor, e coisas do gênero).</p>
+	<textarea id="cache"></textarea>
+
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script>
+		$("button.btn-azul").click(function(e){
+			if(window.getSelection){
+				texto = window.getSelection();
+				span = "<span class='azul'>"+texto+"</span>";	
+				
+			    if(texto.rangeCount){
+			        posicao = texto.getRangeAt(0);
+			        posicao.deleteContents();
+			  	    posicao.insertNode(document.createTextNode(span));
+			    }
+
+
+			}else{
+				if(document.selection.createRange){
+					texto = document.selection.createRange();
+					texto.text = "<span class='azul'>"+texto+"</span>";
+					//console.log(texto.text());
+				}
+			}
+
+
+			  html = $("p").html();
+			  $("#cache").html(html);
+			  $("p").html($("#cache").val());
+			
+			e.preventDefault();
+		});	
+
+
+		$("#hardReset").click(function(){
+			texto = $("p").text();
+		  $("p").text(texto);
+		});	
+	</script>
+</body>
+</html>
